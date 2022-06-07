@@ -13,7 +13,7 @@
 		</div>
 		<span class="product__description">{{ product.compound }}</span>
 		<span class="product__price">{{ product.price }} UAH</span>
-		<button class="buy-btn product__buy-btn">
+		<button @click="buy" class="buy-btn product__buy-btn">
 			<svg class="buy-btn__icon">
 				<use xlink:href="../assets/images/sprite.svg#buy"></use>
 			</svg>
@@ -25,6 +25,11 @@
 export default {
 	name: 'product-item',
 	props: ['product'],
+	methods: {
+		buy() {
+			this.$emit('buy', this.product);
+		},
+	},
 };
 </script>
 
@@ -33,8 +38,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	max-width: 260px;
-	width: 100%;
+	width: 260px;
 	height: 418px;
 	padding: 36px 15px 0 25px;
 	position: relative;

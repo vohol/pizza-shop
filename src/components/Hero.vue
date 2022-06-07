@@ -5,6 +5,9 @@
 			<p class="hero__description">
 				{{ content }}
 			</p>
+			<div class="hero__img-wrapper">
+				<img class="hero__img" src="../assets/images/piza-main.png" alt="" />
+			</div>
 		</div>
 	</section>
 </template>
@@ -29,11 +32,13 @@ export default {
 
 <style lang="scss">
 .hero {
+	position: relative;
 	background-image: url(../assets/images/hero-bg.png);
 	background-repeat: no-repeat;
 	background-position: top center;
 	background-size: cover;
-	min-height: 100vh;
+	height: calc(100vh - 130px);
+	margin-bottom: 130px;
 
 	&__container {
 		padding-top: calc(74px + 90px); //74 - header height
@@ -47,6 +52,19 @@ export default {
 		max-width: 621px;
 		text-align: center;
 		margin: 0 auto;
+	}
+
+	&__img-wrapper {
+		max-width: 667px;
+		width: 100%;
+		position: absolute;
+		right: 50%;
+		bottom: -100px;
+		transform: translateX(50%);
+	}
+
+	&__img {
+		width: 100%;
 	}
 }
 

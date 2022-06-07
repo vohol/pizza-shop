@@ -29,6 +29,12 @@ export default {
 		Navigation,
 		Logo,
 	},
+	created() {
+		window.addEventListener('scroll', this.handleScroll);
+	},
+	destroyed() {
+		window.removeEventListener('scroll', this.handleScroll);
+	},
 	data() {
 		return {
 			workHours: {
@@ -49,6 +55,20 @@ export default {
 
 			return status;
 		},
+		handleScroll() {
+			const className = 'has-background';
+			const scrollTrigger = 50;
+			const header = document.querySelector('.header');
+
+			if (
+				window.scrollY >= scrollTrigger ||
+				window.pageYOffset >= scrollTrigger
+			) {
+				header.classList.add(className);
+			} else {
+				header.classList.remove(className);
+			}
+		},
 	},
 };
 </script>
@@ -60,6 +80,8 @@ export default {
 	right: 0;
 	left: 0;
 	background: transparent;
+	z-index: 1;
+	transition: background-color 0.3s ease;
 
 	&__container {
 		padding-top: 15px;
@@ -151,5 +173,9 @@ export default {
 			}
 		}
 	}
+}
+
+.has-background {
+	background: #f0f5fb;
 }
 </style>

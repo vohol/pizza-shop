@@ -3,13 +3,13 @@
 		<div class="container shop__container">
 			<div class="busket-wrapper">
 				<div class="busket">
-					<span class="busket__amount">=158$</span>
+					<span class="busket__amount">= {{ gerBusketSumm }} UAH</span>
 					<div class="busket__icon-wrap">
 						<svg class="busket__icon">
 							<use xlink:href="../assets/images/sprite.svg#buy"></use>
 						</svg>
 					</div>
-					<span class="busket__pcs">3</span>
+					<span class="busket__pcs">{{ gerBusketQty }}</span>
 				</div>
 			</div>
 			<Title elementClass="shop__title" :title="shopTitle" />
@@ -24,11 +24,11 @@
 				</li>
 			</ul>
 			<ul class="shop-list">
-				<li v-for="item in filteredProducts" :key="item.id">
-					<Product :product="item" />
+				<li v-for="item in getPaginatedProducts" :key="item.id">
+					<Product :product="item" @buy="addProductToBucket" />
 				</li>
 			</ul>
-			<button class="update">
+			<button @click="loadMore" class="update">
 				<svg class="update__icon">
 					<use xlink:href="../assets/images/sprite.svg#update"></use>
 				</svg>
@@ -53,10 +53,26 @@ export default {
 			shopTitle: 'Popular dishes',
 			allProducts: d.defaultData,
 			activeFilters: [],
+			busketData: [],
+			productsToShow: 8,
 		};
 	},
 	methods: {
-		//addProductToBucket(product) {},
+		addProductToBucket(product) {
+			let result = false;
+
+			this.busketData.forEach((element) => {
+				if (element.id == product.id) {
+					element.qty++;
+					result = true;
+					return;
+				}
+			});
+
+			if (result) return;
+
+			this.busketData.push({ ...product, qty: 1 });
+		},
 		filterToggle(event) {
 			let target = event.target.textContent.trim();
 			let targetObject = event.target;
@@ -70,6 +86,10 @@ export default {
 				this.activeFilters.push(target);
 				targetObject.classList.add('shop__filter--active');
 			}
+		},
+		loadMore() {
+			if (this.productsToShow > this.getPaginatedProducts) return;
+			this.productsToShow += 8;
 		},
 	},
 	computed: {
@@ -105,6 +125,19 @@ export default {
 			});
 
 			return filteredItems;
+		},
+		getPaginatedProducts: function () {
+			return this.filteredProducts.slice(0, this.productsToShow);
+		},
+
+		gerBusketSumm: function () {
+			return this.busketData.reduce(
+				(prev, curr) => prev + curr.qty * curr.price,
+				0
+			);
+		},
+		gerBusketQty: function () {
+			return this.busketData.reduce((prev, curr) => prev + curr.qty, 0);
 		},
 	},
 };
@@ -233,6 +266,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	gap: 40px;
+	margin-bottom: 40px;
 }
 
 @media screen and (min-width: 600px) {
@@ -243,6 +277,7 @@ export default {
 		gap: 40px;
 		max-width: 560px;
 		margin: 0 auto;
+		margin-bottom: 66px;
 	}
 }
 
@@ -256,6 +291,23 @@ export default {
 	.shop-list {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		max-width: 1160px;
+	}
+}
+
+.update {
+	width: 60px;
+	height: 60px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(287.74deg, #f58656 8.52%, #fe5626 92.72%);
+	box-shadow: 0px 4px 8px rgba(205, 169, 41, 0.26);
+	border-radius: 59px;
+
+	&__icon {
+		width: 25px;
+		height: 25px;
 	}
 }
 </style>

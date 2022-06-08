@@ -281,12 +281,6 @@ export default {
 	}
 }
 
-@media screen and (min-width: 900px) {
-	.shop-list {
-		grid-template-columns: 1fr 1fr 1fr;
-		max-width: 860px;
-	}
-}
 @media screen and (min-width: 1200px) {
 	.shop-list {
 		grid-template-columns: 1fr 1fr 1fr 1fr;

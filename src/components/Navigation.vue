@@ -76,6 +76,7 @@ export default {
 		display: flex;
 		border-top: 1px solid rgba(#000000, 0.6);
 		width: 100%;
+		background: #f0f5fb;
 	}
 
 	&__link {

@@ -7,6 +7,7 @@
 			<Instagram />
 			<CallForm />
 		</main>
+		<Footer />
 	</div>
 </template>
 
@@ -16,6 +17,7 @@ import Hero from './components/Hero.vue';
 import Shop from './components/Shop.vue';
 import Instagram from './components/Instagram.vue';
 import CallForm from './components/CallForm.vue';
+import Footer from './components/Footer.vue';
 
 export default {
 	name: 'App',
@@ -25,6 +27,7 @@ export default {
 		Shop,
 		Instagram,
 		CallForm,
+		Footer,
 	},
 };
 </script>

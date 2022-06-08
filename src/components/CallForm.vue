@@ -17,7 +17,11 @@
 					placeholder="Phone number"
 					required
 				/>
-				<button class="org-btn" type="submit">Call Back</button>
+				<button class="org-btn" type="submit">
+					Call Back<span class="org-btn__arrow material-symbols-outlined">
+						trending_flat
+					</span>
+				</button>
 			</form>
 			<div class="call-form__img-wrapper">
 				<img
@@ -70,6 +74,14 @@ export default {
 	line-height: 140%;
 	text-align: center;
 	color: #ffffff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+
+	&__arrow {
+		font-size: 50px;
+	}
 }
 
 .call-form {

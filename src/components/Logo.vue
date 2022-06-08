@@ -1,5 +1,5 @@
 <template>
-	<a class="logo header__logo" href="#">
+	<a :class="elementClass" class="logo" href="#">
 		<img class="logo__icon icon" src="../assets/images/logo1.svg" alt="" />
 	</a>
 </template>
@@ -7,6 +7,9 @@
 <script>
 export default {
 	name: 'logo-comp',
+	props: {
+		elementClass: String,
+	},
 };
 </script>
 

@@ -2,7 +2,7 @@
 	<header class="header">
 		<div class="container header__container">
 			<Navigation />
-			<Logo />
+			<Logo elementClass="header__logo" />
 			<div class="header__right">
 				<div
 					class="header__work-time"
@@ -11,7 +11,7 @@
 					Daily {{ workHours.openTime }}am - {{ workHours.closeTime }}pm
 				</div>
 				<a class="header__tel" href="tel:800330898"
-					><span class="icon material-symbols-outlined"> android_dialer </span>0
+					><span class="icon material-symbols-outlined"> phone_in_talk </span>0
 					800 33 08 98</a
 				>
 			</div>
@@ -80,7 +80,7 @@ export default {
 	right: 0;
 	left: 0;
 	background: transparent;
-	z-index: 1;
+	z-index: 999;
 	transition: background-color 0.3s ease;
 
 	&__container {
@@ -158,7 +158,7 @@ export default {
 		}
 
 		&__work-time {
-			display: block;
+			display: flex;
 			font-size: 16px;
 		}
 

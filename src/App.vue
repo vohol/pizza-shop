@@ -5,6 +5,7 @@
 			<Hero />
 			<Shop />
 			<Instagram />
+			<CallForm />
 		</main>
 	</div>
 </template>
@@ -14,6 +15,7 @@ import Header from './components/Header.vue';
 import Hero from './components/Hero.vue';
 import Shop from './components/Shop.vue';
 import Instagram from './components/Instagram.vue';
+import CallForm from './components/CallForm.vue';
 
 export default {
 	name: 'App',
@@ -22,6 +24,7 @@ export default {
 		Hero,
 		Shop,
 		Instagram,
+		CallForm,
 	},
 };
 </script>

@@ -13,7 +13,13 @@
 		</div>
 		<span class="product__description">{{ product.compound }}</span>
 		<span class="product__price">{{ product.price }} UAH</span>
-		<button @click="buy" class="buy-btn product__buy-btn">
+		<button
+			@click="
+				buy();
+				pulse($event);
+			"
+			class="buy-btn product__buy-btn"
+		>
 			<svg class="buy-btn__icon">
 				<use xlink:href="../assets/images/sprite.svg#buy"></use>
 			</svg>
@@ -29,11 +35,63 @@ export default {
 		buy() {
 			this.$emit('buy', this.product);
 		},
+		pulse(event) {
+			const target = event.target;
+			target.classList.add('pulse');
+			setTimeout(() => {
+				target.classList.remove('pulse');
+			}, 800);
+		},
 	},
 };
 </script>
 
 <style lang="scss">
+.buy-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 50%;
+	bottom: 8px;
+	transform: translate(-50%);
+	z-index: 10;
+	width: 33px;
+	height: 33px;
+	border-radius: 50%;
+	background-color: white;
+	border: 2px solid #eceef6;
+
+	&:hover {
+		border: 2px solid #f58656;
+	}
+	&.pulse {
+		animation: pulse 1s forwards ease-out;
+		box-shadow: 0px 15px 28px -11px rgba(#f58656, 0.9);
+	}
+
+	&__icon {
+		pointer-events: none;
+		width: 12.08px;
+		height: 14px;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		-moz-box-shadow: 0 0 0 0 rgba(#f58656, 0.4);
+		box-shadow: 0 0 0 0 rgba(#f58656, 0.4);
+	}
+	70% {
+		-moz-box-shadow: 0 0 0 30px rgba(255, 79, 93, 0);
+		box-shadow: 0 0 0 30px rgba(255, 79, 93, 0);
+	}
+	100% {
+		-moz-box-shadow: 0 0 0 0 rgba(255, 79, 93, 0);
+		box-shadow: 0 0 0 0 rgba(255, 79, 93, 0);
+	}
+}
+
 .product {
 	display: flex;
 	flex-direction: column;

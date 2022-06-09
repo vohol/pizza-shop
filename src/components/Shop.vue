@@ -2,7 +2,7 @@
 	<section class="shop">
 		<div class="container shop__container">
 			<div class="busket-wrapper">
-				<div class="busket">
+				<div v-if="gerBusketQty > 0" class="busket">
 					<span class="busket__amount">= {{ gerBusketSumm }} UAH</span>
 					<div class="busket__icon-wrap">
 						<svg class="busket__icon">
@@ -28,7 +28,13 @@
 					<Product :product="item" @buy="addProductToBucket" />
 				</li>
 			</ul>
-			<button @click="loadMore" class="update">
+			<button
+				@click="
+					loadMore();
+					rotate($event);
+				"
+				class="update"
+			>
 				<svg class="update__icon">
 					<use xlink:href="../assets/images/sprite.svg#update"></use>
 				</svg>
@@ -55,6 +61,7 @@ export default {
 			activeFilters: [],
 			busketData: [],
 			productsToShow: 8,
+			deg: 0,
 		};
 	},
 	methods: {
@@ -90,6 +97,16 @@ export default {
 		loadMore() {
 			if (this.productsToShow > this.getPaginatedProducts) return;
 			this.productsToShow += 8;
+		},
+		rotate(event) {
+			const turn = 360;
+			const target = event.target;
+			target.style.transform = `rotate(${this.deg + turn}deg)`;
+			target.style.MozTransform = `rotate(${this.deg + turn}deg)`;
+			target.style.webkitTransform = `rotate(${this.deg + turn}deg)`;
+			target.style.msTransform = `rotate(${this.deg + turn}deg)`;
+			target.style.OTransform = `rotate(${this.deg + turn}deg)`;
+			this.deg += turn;
 		},
 	},
 	computed: {
@@ -160,6 +177,7 @@ export default {
 		justify-content: center;
 		gap: 30px;
 		margin-bottom: 50px;
+		flex-wrap: wrap;
 	}
 
 	&__filter {
@@ -173,29 +191,39 @@ export default {
 		line-height: 140%;
 		text-align: center;
 		text-transform: capitalize;
-		transition: background 0.2s;
+		transition: all 0.3s;
+
+		&:hover {
+			box-shadow: 0 0 20px 8px rgba(gray, 0.4);
+		}
 
 		&--active {
 			background: #59aaf1;
+
+			&:hover {
+				box-shadow: 0 0 20px 8px rgba(#59aaf1, 0.8);
+			}
 		}
 	}
 }
 
 .busket-wrapper {
-	position: absolute;
-	top: -50px;
+	position: fixed;
+	top: 80px;
 	right: 15px;
+	z-index: 50;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1000px) {
 	.busket-wrapper {
-		top: 15px;
+		top: 115px;
 	}
 }
 
 .busket {
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 	position: relative;
 
 	&__amount {
@@ -217,7 +245,8 @@ export default {
 		width: 80px;
 		height: 80px;
 		border-radius: 50%;
-		box-shadow: 0 0 20px 4px rgba(#000000, 0.3);
+		background: white;
+		box-shadow: 0 0 18px 3px rgba(#000000, 0.3);
 	}
 
 	&__icon {
@@ -237,27 +266,6 @@ export default {
 		border-radius: 50%;
 		background-color: #f58656;
 		color: white;
-	}
-}
-
-.buy-btn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	left: 50%;
-	bottom: 8px;
-	transform: translate(-50%);
-	z-index: 10;
-	width: 33px;
-	height: 33px;
-	border-radius: 50%;
-	background-color: white;
-	border: 2px solid #eceef6;
-
-	&__icon {
-		width: 12.08px;
-		height: 14px;
 	}
 }
 
@@ -298,8 +306,10 @@ export default {
 	background: linear-gradient(287.74deg, #f58656 8.52%, #fe5626 92.72%);
 	box-shadow: 0px 4px 8px rgba(205, 169, 41, 0.26);
 	border-radius: 59px;
+	transition: all 0.5s;
 
 	&__icon {
+		pointer-events: none;
 		width: 25px;
 		height: 25px;
 	}

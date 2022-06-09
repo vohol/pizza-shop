@@ -78,6 +78,14 @@ export default {
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
+	transition: all 0.4s ease;
+	border: 2px solid transparent;
+
+	&:hover {
+		background: white;
+		color: #fe5626;
+		border: 2px solid #fe5626;
+	}
 
 	&__arrow {
 		font-size: 50px;

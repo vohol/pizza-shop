@@ -62,6 +62,7 @@ export default {
 			busketData: [],
 			productsToShow: 8,
 			deg: 0,
+			filterList: [],
 		};
 	},
 	methods: {
@@ -85,11 +86,13 @@ export default {
 			let targetObject = event.target;
 
 			if (this.activeFilters.includes(target)) {
-				this.activeFilters = this.activeFilters.filter(
-					(element) => element != target
-				);
+				this.activeFilters = [];
 				targetObject.classList.remove('shop__filter--active');
 			} else {
+				this.activeFilters = [];
+				document
+					.querySelectorAll('.shop__filter--active')
+					.forEach((el) => el.classList.remove('shop__filter--active'));
 				this.activeFilters.push(target);
 				targetObject.classList.add('shop__filter--active');
 			}
@@ -109,33 +112,24 @@ export default {
 			this.deg += turn;
 		},
 	},
-	computed: {
-		//function to get all product
-		getProducts: function () {
-			let products = this.allProducts;
-			return products;
-		},
+	mounted() {
 		//function to generate filters
-		filterList: function () {
-			let newArray = [];
-
-			this.getProducts.forEach((element) => {
-				if (!newArray.includes(element.category)) {
-					newArray.push(element.category);
-				}
-			});
-
-			return newArray;
-		},
+		this.allProducts.forEach((element) => {
+			if (!this.filterList.includes(element.category)) {
+				this.filterList.push(element.category);
+			}
+		});
+	},
+	computed: {
 		//function to show product according active filters
 		filteredProducts: function () {
 			let filteredItems = [];
 
 			if (this.activeFilters.length == 0) {
-				filteredItems = this.getProducts;
+				filteredItems = this.allProducts;
 			}
 
-			this.getProducts.forEach((element) => {
+			this.allProducts.forEach((element) => {
 				if (this.activeFilters.includes(element.category)) {
 					filteredItems.push(element);
 				}

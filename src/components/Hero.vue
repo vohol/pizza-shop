@@ -46,12 +46,16 @@ export default {
 
 	&__title {
 		margin-bottom: 18px;
+		position: relative;
+		z-index: 1;
 	}
 
 	&__description {
 		max-width: 621px;
 		text-align: center;
 		margin: 0 auto;
+		position: relative;
+		z-index: 1;
 	}
 
 	&__img-wrapper {
